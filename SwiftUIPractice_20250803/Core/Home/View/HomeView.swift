@@ -94,19 +94,16 @@ extension HomeView {
             GridItem(.flexible(), spacing: 8),
             GridItem(.flexible(), spacing: 0)
         ]
-        return ScrollView {
-            // spacing 控制上下
-            LazyVGrid(columns: twoColums, spacing: 4) {
-                ForEach(DeveloperPreview.instance.playLists) { playlist in
-                    PlaylistCollectionView(imageName: playlist.imageName,
-                                           title: playlist.title)                    
-                    .frame(maxWidth: .infinity,
-                           minHeight: 56,
-                           alignment: .leading)
-                }
+        // spacing 控制上下
+        return LazyVGrid(columns: twoColums, spacing: 4) {
+            ForEach(DeveloperPreview.instance.playLists) { playlist in
+                PlaylistCollectionView(imageName: playlist.imageName,
+                                       title: playlist.title)
+                .frame(maxWidth: .infinity,
+                       minHeight: 56,
+                       alignment: .leading)
             }
         }
-        .fixedSize(horizontal: false, vertical: true)
     }
     
     private var newMusicView: some View {
