@@ -10,44 +10,7 @@ import SwiftUI
 struct NewVideoView: View {
     var body: some View {
         ZStack {
-            VStack {
-                HStack {
-                    Spacer()
-                    Image(systemName: "ellipsis")
-                        .padding(.all, 16)
-                }
-                
-                Spacer()
-                
-                HStack {
-                    HStack(spacing: 8) {
-                        Image(systemName: "speaker.slash")
-                        Text("Preview single")
-                            .font(.system(size: 14, weight: .semibold))
-                    }
-                    .padding(.all, 16)
-                    .background {
-                        RoundedRectangle(cornerRadius: 24)
-                            .fill(Color(cgColor: CGColor(red: 6/255,
-                                                         green: 6/255,
-                                                         blue: 6/255,
-                                                         alpha: 1)))
-                    }
-                    
-                    Spacer()
-                    
-                    HStack(spacing: 24) {
-                        Image(systemName: "plus.circle")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 24, height: 24)
-                        Image(systemName: "play.circle.fill")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 36, height: 36)
-                    }
-                }
-            }
+            videoView
         }
         .padding(.all, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -64,4 +27,58 @@ struct NewVideoView: View {
 
 #Preview(traits: .sizeThatFitsLayout) {
     NewVideoView()
+}
+
+extension NewVideoView {
+    
+    private var videoView: some View {
+        VStack {
+            upperView
+            Spacer()
+            lowerView
+        }
+    }
+    
+    private var upperView: some View {
+        HStack {
+            Spacer()
+            Image(systemName: "ellipsis")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+        }
+    }
+    
+    private var lowerView: some View {
+        HStack {
+            previewSingleView
+            Spacer()
+            HStack(spacing: 24) {
+                Image(systemName: "plus.circle")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 24, height: 24)
+                Image(systemName: "play.circle.fill")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 36, height: 36)
+            }
+        }
+    }
+    
+    private var previewSingleView: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "speaker.slash")
+            Text("Preview single")
+                .font(.system(size: 14, weight: .semibold))
+        }
+        .padding(.all, 16)
+        .background {
+            RoundedRectangle(cornerRadius: 24)
+                .fill(Color(cgColor: CGColor(red: 6/255,
+                                             green: 6/255,
+                                             blue: 6/255,
+                                             alpha: 1)))
+        }
+    }
 }
