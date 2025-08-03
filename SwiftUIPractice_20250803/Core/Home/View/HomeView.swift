@@ -15,7 +15,7 @@ struct HomeView: View {
     private let MessageTitle = "Message"
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 16) {
             mainInfoView
             playlistCollectionView
             newMusicView
@@ -38,7 +38,7 @@ struct HomeView: View {
 extension HomeView {
     
     private var mainInfoView: some View {
-        HStack(alignment: .center, spacing: 16) {
+        HStack(alignment: .center, spacing: 8) {
             Image(systemName: vm.profileImageName)
                 .foregroundColor(.white)
                 .padding(.all, 8)
