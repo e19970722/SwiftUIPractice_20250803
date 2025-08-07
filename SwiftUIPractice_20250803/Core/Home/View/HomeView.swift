@@ -17,14 +17,10 @@ struct HomeView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             mainInfoView
-            playlistCollectionView
-            newMusicView
+            mainListView
         }
         .padding(.leading, 16)
         .padding(.trailing, 16)
-        .frame(maxWidth: .infinity,
-               maxHeight: .infinity,
-               alignment: .topLeading)
         .background(Color.theme.background)
     }
 }
@@ -49,12 +45,8 @@ extension HomeView {
                                          msg: "All")
             } label: {
                 Text("All")
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .font(.system(size: 12))
-                    .foregroundColor(Color.theme.secondaryText)
-                    .background(.green)
-                    .cornerRadius(16)
+                    .modifier(SegmentBtnViewModifier(isSelected: true))
+                    
             }
             .alert(item: $showAlertMsg) { item in
                 Alert(title: Text(item.title),
@@ -65,27 +57,40 @@ extension HomeView {
                 
             } label: {
                 Text("Music")
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .font(.system(size: 12))
-                    .foregroundColor(.white)
-                    .background(Color.theme.secondaryBtn)
-                    .cornerRadius(16)
+                    .modifier(SegmentBtnViewModifier(isSelected: false))
             }
             
             Button {
                 
             } label: {
                 Text("Podcast")
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .font(.system(size: 12))
-                    .foregroundColor(.white)
-                    .background(Color.theme.secondaryBtn)
-                    .cornerRadius(16)
+                    .modifier(SegmentBtnViewModifier(isSelected: false))
             }
-            
         }
+    }
+    
+    private var mainListView: some View {
+        let bottomPadding = 24.0
+        return List {
+            Section {
+                playlistCollectionView
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+            }
+            .listRowBackground(Color.clear)
+            .padding(.bottom, bottomPadding)
+            
+            Section {
+                newMusicView
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+            }
+            .listRowBackground(Color.clear)
+            .padding(.bottom, bottomPadding)
+
+        }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
     }
     
     private var playlistCollectionView: some View {

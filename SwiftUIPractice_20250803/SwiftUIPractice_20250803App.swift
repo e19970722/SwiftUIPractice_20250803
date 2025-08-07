@@ -12,6 +12,12 @@ struct SwiftUIPractice_20250803App: App {
     
     @StateObject var vm = HomeViewModel()
     
+    init() {
+        // 移除所有 UITableView 的背景
+        UITableView.appearance().backgroundColor = .clear
+        UITableViewCell.appearance().backgroundColor = .clear
+    }
+    
     var body: some Scene {
         WindowGroup {
             tabBarView
