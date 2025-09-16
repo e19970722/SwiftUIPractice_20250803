@@ -21,14 +21,18 @@ class DeveloperPreview {
     
     var vm = HomeViewModel()
     
+    let songs = [
+        MusicItem(artist: "Mariah Carey", song: "All I Want For Christmas Is You")
+    ]
+    
     let playLists = [
-        PlaylistItem(imageName: "heart.fill", title: "Liked Songs"),
-        PlaylistItem(imageName: "heart.fill", title: "Liked Songs"),
-        PlaylistItem(imageName: "heart.fill", title: "Liked Songs"),
-        PlaylistItem(imageName: "heart.fill", title: "Liked Songs"),
-        PlaylistItem(imageName: "heart.fill", title: "Liked Songs"),
-        PlaylistItem(imageName: "heart.fill", title: "Liked Songs"),
-        PlaylistItem(imageName: "heart.fill", title: "Liked Songs"),
-        PlaylistItem(imageName: "heart.fill", title: "Liked Songs")
+        PlaylistItem(imageName: "Collections", title: "Collections"),
+        PlaylistItem(imageName: "Collections", title: "Collections"),
+        PlaylistItem(imageName: "Collections", title: "Collections"),
+        PlaylistItem(imageName: "Collections", title: "Collections"),
+        PlaylistItem(imageName: "Collections", title: "Collections"),
+        PlaylistItem(imageName: "Collections", title: "Collections"),
+        PlaylistItem(imageName: "Collections", title: "Collections"),
+        PlaylistItem(imageName: "Collections", title: "Collections")
     ]
 }

@@ -73,7 +73,7 @@ extension HomeView {
         let bottomPadding = 24.0
         return List {
             Section {
-                playlistCollectionView
+                PlaylistCollectionSectionView(playlists: DeveloperPreview.instance.playLists)
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
             }
@@ -93,6 +93,7 @@ extension HomeView {
         .scrollContentBackground(.hidden)
     }
     
+    /// 4x2 的 CollectionView
     private var playlistCollectionView: some View {
         let twoColums: [GridItem] = [
             // spacing 控制左右
@@ -104,8 +105,8 @@ extension HomeView {
             ForEach(DeveloperPreview.instance.playLists) { playlist in
                 PlaylistCollectionView(imageName: playlist.imageName,
                                        title: playlist.title)
-                .frame(maxWidth: .infinity,
-                       minHeight: 56,
+                .frame(width: .infinity,
+                       height: 48,
                        alignment: .leading)
             }
         }
