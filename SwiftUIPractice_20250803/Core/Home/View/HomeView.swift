@@ -12,13 +12,16 @@ struct HomeView: View {
     @EnvironmentObject private var vm: HomeViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            MainInfoView(profileImageName: vm.user?.userImage ?? "Profile")
-            mainListView
+        GeometryReader { geo in
+            VStack(alignment: .leading, spacing: 16) {
+                MainInfoView(profileImageName: vm.user?.userImage ?? "Profile")
+                    .frame(height: geo.size.height * 0.05)
+                mainListView
+            }
+            .padding(.leading, 16)
+            .padding(.trailing, 16)
+            .background(Color.theme.background)
         }
-        .padding(.leading, 16)
-        .padding(.trailing, 16)
-        .background(Color.theme.background)
     }
 }
 
