@@ -14,15 +14,32 @@ extension PreviewProvider {
     }
 }
 
+struct User {
+    let userName: String
+    let userImage: String
+}
+
 class DeveloperPreview {
     static let instance = DeveloperPreview()
     
     private init() {}
     
-    var vm = HomeViewModel()
+    lazy var vm: HomeViewModel = {
+        var vm = HomeViewModel()
+        vm.user = self.user
+        vm.songs = self.songs
+        vm.playlists = self.playLists
+        vm.newMusic = self.newMusic
+        return vm
+    }()
     
-    let songs = [
-        MusicItem(artist: "Mariah Carey", song: "All I Want For Christmas Is You")
+    let user = User(userName: "Yen Lin", userImage: "Profile")
+    
+    let artist = "Mariah Carey"
+    let song = "We Belong Together (Mimi's Late Night Valentine's Mix)"
+    
+    lazy var songs = [
+        MusicItem(artist: self.artist, song: self.song)
     ]
     
     let playLists = [
@@ -35,4 +52,6 @@ class DeveloperPreview {
         PlaylistItem(imageName: "Collections", title: "Collections"),
         PlaylistItem(imageName: "Collections", title: "Collections")
     ]
+    
+    lazy var newMusic = NewMusicItem(artist: self.artist, song: self.song, artistImage: "Artist", videoImage: "NewMusicVideo")
 }

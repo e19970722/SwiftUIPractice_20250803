@@ -20,4 +20,5 @@ struct ColorTheme {
     let secondaryText = Color("SecondaryTextColor")
     let secondaryBtn = Color("SecondaryBtnColor")
     let nowPlayingView = Color("NowPlayingViewColor")
+    let newMusicVideoView = Color("NewMusicVideoView")
 }

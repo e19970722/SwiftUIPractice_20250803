@@ -13,12 +13,12 @@ struct SegmentBtnViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 10)
             .font(.system(size: 12))
             .foregroundColor(isSelected ? Color.theme.secondaryText : Color.white)
             .background(isSelected ? .green : Color.theme.secondaryBtn)
-            .cornerRadius(16)
+            .cornerRadius(20)
     }
 }
 

@@ -8,25 +8,31 @@
 import SwiftUI
 
 struct NewVideoView: View {
+    
+    var videoImage: String
+    
     var body: some View {
         ZStack {
+            Image(videoImage)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .clipped()
             videoView
+                .padding(.all, 16)
+
         }
-        .padding(.all, 16)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .frame(maxWidth: .infinity,
+               maxHeight: .infinity,
+               alignment: .topLeading)
         .foregroundColor(.white)
-        .background {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color(cgColor: CGColor(red: 16/255,
-                                             green: 16/255,
-                                             blue: 16/255,
-                                             alpha: 1)))
-        }
+        .background(Color.theme.newMusicVideoView)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    NewVideoView()
+    NewVideoView(videoImage: DeveloperPreview.instance.newMusic.videoImage ?? "NewMusicVideo")
+        .frame(height: 300)
 }
 
 extension NewVideoView {
@@ -51,7 +57,7 @@ extension NewVideoView {
     
     private var lowerView: some View {
         HStack {
-            previewSingleView
+            previewSoundBtnView
             Spacer()
             HStack(spacing: 24) {
                 Image(systemName: "plus.circle")
@@ -66,7 +72,7 @@ extension NewVideoView {
         }
     }
     
-    private var previewSingleView: some View {
+    private var previewSoundBtnView: some View {
         HStack(spacing: 8) {
             Image(systemName: "speaker.slash")
             Text("Preview single")

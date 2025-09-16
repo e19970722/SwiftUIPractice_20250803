@@ -10,14 +10,12 @@ import Combine
 
 class HomeViewModel: ObservableObject {
     
+    // TODO
     @Published var profileImageName: String = "person.circle"
-    @Published var playlists: [PlaylistItem] = []
-    @Published var newMusic: NewMusicItem = NewMusicItem(artist: "Mariah Carey",
-                                                         songName: "All I Want For Christmas Is You",
-                                                         imageUrl: "",
-                                                         videoUrl: "")
     
-    init() {
-        
-    }
+    @Published var user: User?
+    @Published var songs: [MusicItem]?
+    @Published var playlists: [PlaylistItem]?
+    @Published var newMusic: NewMusicItem?
+    
 }

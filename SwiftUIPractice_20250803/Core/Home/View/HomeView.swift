@@ -10,13 +10,10 @@ import SwiftUI
 struct HomeView: View {
     
     @EnvironmentObject private var vm: HomeViewModel
-    @State private var showAlertMsg: AlertItem? = nil
-    
-    private let MessageTitle = "Message"
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            mainInfoView
+            MainInfoView(profileImageName: vm.user?.userImage ?? "Profile")
             mainListView
         }
         .padding(.leading, 16)
@@ -33,57 +30,28 @@ struct HomeView: View {
 
 extension HomeView {
     
-    private var mainInfoView: some View {
-        HStack(alignment: .center, spacing: 8) {
-            Image(systemName: vm.profileImageName)
-                .foregroundColor(.white)
-                .padding(.all, 8)
-            
-            Button {
-                showAlertMsg = AlertItem(id: "All",
-                                         title: MessageTitle,
-                                         msg: "All")
-            } label: {
-                Text("All")
-                    .modifier(SegmentBtnViewModifier(isSelected: true))
-                    
-            }
-            .alert(item: $showAlertMsg) { item in
-                Alert(title: Text(item.title),
-                      message: Text(item.msg),
-                      dismissButton: .default(Text("OK")))
-            }
-            Button {
-                
-            } label: {
-                Text("Music")
-                    .modifier(SegmentBtnViewModifier(isSelected: false))
-            }
-            
-            Button {
-                
-            } label: {
-                Text("Podcast")
-                    .modifier(SegmentBtnViewModifier(isSelected: false))
-            }
-        }
-    }
-    
     private var mainListView: some View {
         let bottomPadding = 24.0
         return List {
             Section {
-                PlaylistCollectionSectionView(playlists: DeveloperPreview.instance.playLists)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets())
+                if let playlist = vm.playlists {
+                    PlaylistCollectionSectionView(playlists: playlist)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets())
+                }
             }
             .listRowBackground(Color.clear)
             .padding(.bottom, bottomPadding)
             
             Section {
-                newMusicView
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(EdgeInsets())
+                if let newMusic = vm.newMusic {
+                    NewMusicView(artistImage: newMusic.artistImage ?? "",
+                                 newMusic: newMusic,
+                                 videoImage: newMusic.videoImage ?? "")
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets())
+                }
+                
             }
             .listRowBackground(Color.clear)
             .padding(.bottom, bottomPadding)
@@ -91,46 +59,5 @@ extension HomeView {
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
-    }
-    
-    /// 4x2 的 CollectionView
-    private var playlistCollectionView: some View {
-        let twoColums: [GridItem] = [
-            // spacing 控制左右
-            GridItem(.flexible(), spacing: 8),
-            GridItem(.flexible(), spacing: 0)
-        ]
-        // spacing 控制上下
-        return LazyVGrid(columns: twoColums, spacing: 4) {
-            ForEach(DeveloperPreview.instance.playLists) { playlist in
-                PlaylistCollectionView(imageName: playlist.imageName,
-                                       title: playlist.title)
-                .frame(width: .infinity,
-                       height: 48,
-                       alignment: .leading)
-            }
-        }
-    }
-    
-    private var newMusicView: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Image(systemName: "person.circle")
-                    .foregroundColor(.white)
-                    .padding(.all, 8)
-                
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("New Music Video From \(vm.newMusic.artist)")
-                        .foregroundColor(.gray)
-                        .font(.system(size: 12, weight: .semibold))
-                    Text("\(vm.newMusic.songName)")
-                        .foregroundColor(.white)
-                        .font(.system(size: 16, weight: .semibold))
-                }
-            }
-            NewVideoView()
-                .frame(height: 240)
-            
-        }
     }
 }

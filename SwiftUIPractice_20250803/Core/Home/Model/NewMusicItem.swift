@@ -9,7 +9,7 @@ import Foundation
 
 struct NewMusicItem: Codable {
     let artist: String
-    let songName: String
-    let imageUrl: String?
-    let videoUrl: String?
+    let song: String
+    let artistImage: String?
+    let videoImage: String?
 }

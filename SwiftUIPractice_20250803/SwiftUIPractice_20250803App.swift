@@ -10,7 +10,9 @@ import SwiftUI
 @main
 struct SwiftUIPractice_20250803App: App {
     
-    @StateObject var vm = HomeViewModel()
+    /// ⚠️ TODO: 目前替換成測試 VM
+//    @StateObject var vm = HomeViewModel()
+    @StateObject var vm = DeveloperPreview.instance.vm
     
     init() {
         // 移除所有 UITableView 的背景
