@@ -25,8 +25,9 @@ struct SwiftUIPractice_20250803App: App {
             tabBarView
                 .overlay(alignment: .bottomLeading, content: {
                     nowPlayingView
-                        .frame(height: UIScreen.main.bounds.height * (56 / 852))
-                        .safeAreaPadding(.bottom, UITabBarController().height + 16)
+                        .frame(height: UIScreen.main.bounds.height * (57 / 874))
+                        .safeAreaPadding(.bottom, UITabBarController().height + 8)
+                        .padding(.horizontal, 8)
                 })
         }
     }
@@ -69,12 +70,13 @@ struct SwiftUIPractice_20250803App: App {
 
 extension SwiftUIPractice_20250803App {
     private var nowPlayingView: some View {
-        NowPlayingView(imageName: "heart",
-                       songName: "All I Want For Christmas Is You",
-                       artistName: "Mariah Carey",
+        NowPlayingView(artistName: DeveloperPreview.instance.artist,
+                       songName: DeveloperPreview.instance.song,
+                       albumImage: DeveloperPreview.instance.albumImage,
                        playingPlatform: .headphone,
-                       bluetoothName: "Yen Lin's Airpods Pro")
-            .padding(.all, 8)
+                       playingDevice: .bluetooth,
+                       deviceName: DeveloperPreview.instance.deviceName,
+                       isPlaying: false)
     }
 }
 

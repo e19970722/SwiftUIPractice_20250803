@@ -37,6 +37,8 @@ class DeveloperPreview {
     
     let artist = "Mariah Carey"
     let song = "We Belong Together (Mimi's Late Night Valentine's Mix)"
+    let albumImage = "AlbumImage"
+    let deviceName = "Yen Lin's Airpods Pro"
     
     lazy var songs = [
         MusicItem(artist: self.artist, song: self.song)
