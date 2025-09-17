@@ -20,17 +20,16 @@ enum PlayingDevice: String {
 
 struct NowPlayingView: View {
     
+    @State var isPlaying = false
+    var playingProgress = 0.0
+    
     var artistName: String
     var songName: String
     var albumImage: String
     var playingPlatform: PlayingPlatform
     var playingDevice: PlayingDevice
     var deviceName: String
-    
-    let backgroundColor: Color = .greyColor1
-    
-    @State var isPlaying = false
-    
+            
     init(artistName: String, songName: String, albumImage: String, playingPlatform: PlayingPlatform, playingDevice: PlayingDevice, deviceName: String, isPlaying: Bool = false) {
         self.artistName = artistName
         self.songName = songName
@@ -45,6 +44,7 @@ struct NowPlayingView: View {
         GeometryReader { geo in
             VStack(alignment: .center, spacing: 8) {
                 songMainView
+                    .frame(maxHeight: .infinity)
                 progressView
                     .frame(height: geo.size.height * 0.03)
             }
@@ -70,17 +70,14 @@ struct NowPlayingView: View {
 extension NowPlayingView {
     
     private var songMainView: some View {
-        GeometryReader { geo in
-            HStack {
-                songInfoView(height: geo.size.height)
-                Spacer()
-                controlBtns
-            }
+        HStack {
+            songInfoView
+            Spacer()
+            controlBtns
         }
     }
     
     private var progressView: some View {
-        
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 16)
                 .fill(.greyColor1)
@@ -89,17 +86,15 @@ extension NowPlayingView {
                 .fill(.white)
                 .frame(width: 80)
         }
-        
     }
     
-    private func songInfoView(height: CGFloat) -> some View {
+    private var songInfoView: some View {
         HStack(spacing: 8) {
             Image(albumImage)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: height, height: height)
+                .aspectRatio(1, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                
+            
             songTitleAndDeviceView
         }
     }
