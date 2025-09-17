@@ -40,6 +40,8 @@ class DeveloperPreview {
     let albumImage = "AlbumImage"
     let deviceName = "Yen Lin's Airpods Pro"
     
+    lazy var currentSong = MusicItem(artist: self.artist, song: self.song, album: self.albumImage)
+    
     lazy var songs = [
         MusicItem(artist: self.artist, song: self.song)
     ]

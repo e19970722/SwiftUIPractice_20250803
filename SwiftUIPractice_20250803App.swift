@@ -13,6 +13,7 @@ struct SwiftUIPractice_20250803App: App {
     /// ⚠️ TODO: 目前替換成測試 VM
 //    @StateObject var vm = HomeViewModel()
     @StateObject var vm = DeveloperPreview.instance.vm
+    @StateObject var nowPlayingVM = NowPlayingViewModel()
     
     init() {
         // 移除所有 UITableView 的背景
@@ -22,10 +23,12 @@ struct SwiftUIPractice_20250803App: App {
     
     var body: some Scene {
         WindowGroup {
+            let nowPlayingViewHeight = UIScreen.main.bounds.height * (57 / 874)
             tabBarView
                 .overlay(alignment: .bottomLeading, content: {
-                    nowPlayingView
-                        .frame(height: UIScreen.main.bounds.height * (57 / 874))
+                    NowPlayingView()
+                        .environmentObject(nowPlayingVM)
+                        .frame(height: nowPlayingViewHeight)
                         .safeAreaPadding(.bottom, UITabBarController().height + 8)
                         .padding(.horizontal, 8)
                 })
@@ -65,18 +68,6 @@ struct SwiftUIPractice_20250803App: App {
         }
         .tint(.white)
         
-    }
-}
-
-extension SwiftUIPractice_20250803App {
-    private var nowPlayingView: some View {
-        NowPlayingView(artistName: DeveloperPreview.instance.artist,
-                       songName: DeveloperPreview.instance.song,
-                       albumImage: DeveloperPreview.instance.albumImage,
-                       playingPlatform: .headphone,
-                       playingDevice: .bluetooth,
-                       deviceName: DeveloperPreview.instance.deviceName,
-                       isPlaying: false)
     }
 }
 

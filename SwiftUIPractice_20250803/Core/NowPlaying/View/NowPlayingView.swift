@@ -7,46 +7,18 @@
 
 import SwiftUI
 
-enum PlayingPlatform {
-    case none
-    case headphone
-    case computer
-}
-
-enum PlayingDevice: String {
-    case none
-    case bluetooth
-}
-
 struct NowPlayingView: View {
     
-    @State var isPlaying = false
-    var playingProgress = 0.0
-    
-    var artistName: String
-    var songName: String
-    var albumImage: String
-    var playingPlatform: PlayingPlatform
-    var playingDevice: PlayingDevice
-    var deviceName: String
-            
-    init(artistName: String, songName: String, albumImage: String, playingPlatform: PlayingPlatform, playingDevice: PlayingDevice, deviceName: String, isPlaying: Bool = false) {
-        self.artistName = artistName
-        self.songName = songName
-        self.albumImage = albumImage
-        self.playingPlatform = playingPlatform
-        self.playingDevice = playingDevice
-        self.deviceName = deviceName
-        self.isPlaying = isPlaying
-    }
+    @EnvironmentObject var vm: NowPlayingViewModel
     
     var body: some View {
         GeometryReader { geo in
             VStack(alignment: .center, spacing: 8) {
                 songMainView
                     .frame(maxHeight: .infinity)
-                progressView
-                    .frame(height: geo.size.height * 0.03)
+                
+                progressView(width: geo.size.width,
+                             height: geo.size.height * 0.03)
             }
         }
         .padding(.horizontal, 8)
@@ -57,14 +29,9 @@ struct NowPlayingView: View {
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    NowPlayingView(artistName: DeveloperPreview.instance.artist,
-                   songName: DeveloperPreview.instance.song,
-                   albumImage: DeveloperPreview.instance.albumImage,
-                   playingPlatform: .headphone,
-                   playingDevice: .bluetooth,
-                   deviceName: DeveloperPreview.instance.deviceName,
-                   isPlaying: false)
-    .frame(height: UIScreen.main.bounds.height * (70 / 874))
+    NowPlayingView()
+        .frame(height: UIScreen.main.bounds.height * (70 / 874))
+        .environmentObject(NowPlayingViewModel())
 }
 
 extension NowPlayingView {
@@ -77,20 +44,21 @@ extension NowPlayingView {
         }
     }
     
-    private var progressView: some View {
+    private func progressView(width: CGFloat, height: CGFloat) -> some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 16)
                 .fill(.greyColor1)
             
             RoundedRectangle(cornerRadius: 16)
                 .fill(.white)
-                .frame(width: 80)
+                .frame(width: width * vm.currentProgress)
         }
+        .frame(height: height)
     }
     
     private var songInfoView: some View {
         HStack(spacing: 8) {
-            Image(albumImage)
+            Image(vm.currentSong.album ?? "")
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -109,13 +77,13 @@ extension NowPlayingView {
     private var songTitle: some View {
         HStack(spacing: 4) {
             HStack {
-                Text(songName)
+                Text(vm.currentSong.song)
                     .lineLimit(1)
                 Text("·")
             }
             .foregroundColor(.white)
             
-            Text(artistName)
+            Text(vm.currentSong.artist)
                 .lineLimit(1)
                 .foregroundColor(.secondaryTextColor2)
         }
@@ -124,10 +92,10 @@ extension NowPlayingView {
     
     private var deviceView: some View {
         HStack(spacing: 2) {
-            Image(self.playingDevice.rawValue)
+            Image(vm.playingDevice.rawValue)
                 .resizable()
                 .frame(width: 14, height: 14)
-            Text(deviceName)
+            Text(vm.deviceName)
                 .font(.system(size: 12))
         }
         .foregroundColor(Color.theme.green)
@@ -145,14 +113,14 @@ extension NowPlayingView {
             }
             
             Button {
-                
+                vm.isPlaying.toggle()
             } label: {
-                Image(systemName: isPlaying ? "pause.fill" : "play.fill")
+                Image(systemName: vm.isPlaying ? "pause.fill" : "play.fill")
                     .resizable()
                     .frame(width: 18, height: 18)
                     .foregroundColor(.white)
             }
         }
-        .padding(.horizontal, 8)
+        .padding(.horizontal, 16)
     }
 }
