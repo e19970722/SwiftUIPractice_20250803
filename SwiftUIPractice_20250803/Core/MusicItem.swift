@@ -9,10 +9,14 @@ struct MusicItem {
     let artist: String
     let song: String
     let album: String?
+    let songUrl: String?
+    let duration: Double?
     
-    init(artist: String, song: String, album: String? = nil) {
+    init(artist: String, song: String, album: String? = nil, songUrl: String? = nil, duration: Double? = nil) {
         self.artist = artist
         self.song = song
         self.album = album
+        self.songUrl = songUrl
+        self.duration = duration
     }
 }

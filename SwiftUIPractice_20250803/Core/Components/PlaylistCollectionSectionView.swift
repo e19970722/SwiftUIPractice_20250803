@@ -13,7 +13,9 @@ struct PlaylistCollectionSectionView: View {
     var playlists: [PlaylistItem]
     
     var body: some View {
-        let singleHeight = UIScreen.main.bounds.height * (257/874) / 4
+        let collectionViewHeight = UIScreen.main.bounds.height * (257/874)
+        // 3個8px的Spacing
+        let singleHeight = (collectionViewHeight - (3 * 8)) / 4
         
         var displayPlaylist = playlists[0...6]
         displayPlaylist.insert(PlaylistItem(imageName: "heart",
@@ -28,9 +30,7 @@ struct PlaylistCollectionSectionView: View {
             ForEach(displayPlaylist) { playlist in
                 PlaylistCollectionView(imageName: playlist.imageName,
                                        title: playlist.title)
-                .frame(width: .infinity,
-                       height: singleHeight,
-                       alignment: .leading)
+                .frame(height: singleHeight)
             }
         }
     }

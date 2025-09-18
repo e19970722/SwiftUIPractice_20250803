@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 import Combine
 
 enum PlayingPlatform {
@@ -29,4 +30,48 @@ class NowPlayingViewModel: ObservableObject {
     @Published var playingDevice: PlayingDevice = .bluetooth
     @Published var deviceName = DeveloperPreview.instance.deviceName
     
+    private var player: AVPlayer?
+    private var playingTimer: Timer?
+    private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        addObserver()
+    }
+    
+    private func addObserver() {
+        self.$isPlaying
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isPlaying in
+                guard let self = self else { return }
+                if isPlaying {
+                    self.play()
+                } else {
+                    self.pause()
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func playSong(song: MusicItem) {
+        if let songURLString = self.currentSong.songUrl,
+           let musicURL = URL(string: songURLString) {
+            player = AVPlayer(url: musicURL)
+            self.isPlaying = false
+            play()
+        }
+        
+        guard let duration = self.currentSong.duration else { return }
+        playingTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { [weak self] _ in
+            self?.isPlaying = false
+            self?.pause()
+        }
+    }
+    
+    func play() {
+        player?.play()
+    }
+    
+    func pause() {
+        player?.pause()
+    }
 }

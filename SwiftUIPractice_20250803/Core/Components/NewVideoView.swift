@@ -76,7 +76,7 @@ extension NewVideoView {
         HStack(spacing: 8) {
             Image(systemName: "speaker.slash")
             Text("Preview single")
-                .font(.system(size: 14, weight: .semibold))
+                .font(.system(size: 12, weight: .semibold))
         }
         .padding(.all, 16)
         .background {

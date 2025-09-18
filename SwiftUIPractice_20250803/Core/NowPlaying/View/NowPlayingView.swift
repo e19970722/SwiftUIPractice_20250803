@@ -25,6 +25,9 @@ struct NowPlayingView: View {
         .padding(.top, 8)
         .background(Color.theme.nowPlayingView)
         .clipShape(RoundedRectangle(cornerRadius: 8))
+        .onAppear {
+            vm.playSong(song: MusicItem(artist: "", song: ""))
+        }
     }
 }
 

@@ -31,6 +31,8 @@ struct SwiftUIPractice_20250803App: App {
                         .frame(height: nowPlayingViewHeight)
                         .safeAreaPadding(.bottom, UITabBarController().height + 8)
                         .padding(.horizontal, 8)
+                        /// 解決遮擋Tab Bar點擊事件
+//                        .allowsHitTesting(false)
                 })
         }
     }

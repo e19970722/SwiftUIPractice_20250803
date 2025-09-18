@@ -36,11 +36,14 @@ class DeveloperPreview {
     let user = User(userName: "Yen Lin", userImage: "Profile")
     
     let artist = "Mariah Carey"
-    let song = "We Belong Together (Mimi's Late Night Valentine's Mix)"
+    let song = "We Belong Together"
     let albumImage = "AlbumImage"
     let deviceName = "Yen Lin's Airpods Pro"
     
-    lazy var currentSong = MusicItem(artist: self.artist, song: self.song, album: self.albumImage)
+    lazy var currentSong = MusicItem(artist: self.artist,
+                                     song: self.song,
+                                     album: self.albumImage,
+                                     songUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/95/df/e5/95dfe5ac-efe4-5422-e39d-a015a9cf2b1f/mzaf_10401943975266303767.plus.aac.p.m4a")
     
     lazy var songs = [
         MusicItem(artist: self.artist, song: self.song)
@@ -57,5 +60,7 @@ class DeveloperPreview {
         PlaylistItem(imageName: "Collections", title: "Collections")
     ]
     
-    lazy var newMusic = NewMusicItem(artist: self.artist, song: self.song, artistImage: "Artist", videoImage: "NewMusicVideo")
+    lazy var newMusic = NewMusicItem(artist: self.artist,
+                                     song: "We Belong Together (Mimi's Late Night Valentine's Mix)",
+                                     artistImage: "Artist", videoImage: "NewMusicVideo")
 }
