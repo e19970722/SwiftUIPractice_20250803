@@ -43,6 +43,7 @@ extension NowPlayingView {
         HStack {
             songInfoView
             Spacer()
+            // Test
             controlBtns
         }
     }
