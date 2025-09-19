@@ -26,7 +26,7 @@ struct PlaylistCollectionView: View {
                                 
                 Text(title)
                     .font(.system(size: 14,
-                                  weight: .semibold,))
+                                  weight: .semibold))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .foregroundColor(.white)
