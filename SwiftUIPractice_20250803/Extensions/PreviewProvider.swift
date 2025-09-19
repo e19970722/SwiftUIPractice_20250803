@@ -43,7 +43,8 @@ class DeveloperPreview {
     lazy var currentSong = MusicItem(artist: self.artist,
                                      song: self.song,
                                      album: self.albumImage,
-                                     songUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/95/df/e5/95dfe5ac-efe4-5422-e39d-a015a9cf2b1f/mzaf_10401943975266303767.plus.aac.p.m4a")
+                                     songUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/95/df/e5/95dfe5ac-efe4-5422-e39d-a015a9cf2b1f/mzaf_10401943975266303767.plus.aac.p.m4a",
+                                     duration: 29)
     
     lazy var songs = [
         MusicItem(artist: self.artist, song: self.song)

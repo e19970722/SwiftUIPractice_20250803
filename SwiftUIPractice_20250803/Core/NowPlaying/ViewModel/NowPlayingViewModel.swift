@@ -25,13 +25,15 @@ class NowPlayingViewModel: ObservableObject {
     // ⚠️ TODO: 傳入真實播放值
     @Published var isPlaying: Bool = false
     @Published var currentSong: MusicItem = DeveloperPreview.instance.currentSong
-    @Published var currentProgress: Double = 0.35
+    @Published var currentProgress: Double = 0.0
     @Published var playingPlatform: PlayingPlatform = .headphone
     @Published var playingDevice: PlayingDevice = .bluetooth
     @Published var deviceName = DeveloperPreview.instance.deviceName
+    /// 目前播到幾秒
+    @Published var currentTimerSec: Double = 0.0
     
     private var player: AVPlayer?
-    private var playingTimer: Timer?
+    private var playingTimeSubscription: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
     
     init() {
@@ -39,39 +41,65 @@ class NowPlayingViewModel: ObservableObject {
     }
     
     private func addObserver() {
-        self.$isPlaying
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] isPlaying in
-                guard let self = self else { return }
-                if isPlaying {
-                    self.play()
-                } else {
+        self.$currentTimerSec
+            .sink { [weak self] sec in
+                guard let self = self,
+                      let duration = currentSong.duration else { return }
+                if self.currentTimerSec > duration {
                     self.pause()
+                } else {
+                    self.currentProgress = sec / duration
                 }
+                print("**** currentSec: \(self.currentTimerSec)")
             }
             .store(in: &cancellables)
     }
     
-    func playSong(song: MusicItem) {
+    func loadSong(song: MusicItem) {
         if let songURLString = self.currentSong.songUrl,
            let musicURL = URL(string: songURLString) {
             player = AVPlayer(url: musicURL)
-            self.isPlaying = false
-            play()
-        }
-        
-        guard let duration = self.currentSong.duration else { return }
-        playingTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { [weak self] _ in
-            self?.isPlaying = false
-            self?.pause()
         }
     }
     
     func play() {
-        player?.play()
+        print("***** Start Playing")
+        guard let duration = currentSong.duration else { return }
+        if self.currentTimerSec == duration {
+            self.currentTimerSec = 0.0
+        }
+        
+        playingTimeSubscription?.cancel()
+        playingTimeSubscription = nil
+        playingTimeSubscription = Timer
+            .publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .scan(self.currentTimerSec, { (sec, _ ) in
+                return sec + 1.0
+            })
+            /// Timer繼續存活的條件
+            .prefix{ sec in
+                return sec <= duration
+            }
+            .sink(receiveCompletion: { [weak self] _ in
+                guard let self = self else { return }
+                self.isPlaying = false
+                print("***** Timer Completed")
+                
+            }, receiveValue: { [weak self] sec in
+                guard let self = self else { return }
+                self.currentTimerSec = sec
+            })
+        
+        self.player?.play()
+        self.isPlaying = true
     }
     
     func pause() {
-        player?.pause()
+        print("***** Stop Playing")
+        self.player?.pause()
+        self.isPlaying = false
+        self.playingTimeSubscription?.cancel()
+        self.playingTimeSubscription = nil
     }
 }

@@ -26,7 +26,7 @@ struct NowPlayingView: View {
         .background(Color.theme.nowPlayingView)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .onAppear {
-            vm.playSong(song: MusicItem(artist: "", song: ""))
+            vm.loadSong(song: MusicItem(artist: "", song: ""))
         }
     }
 }
@@ -118,6 +118,11 @@ extension NowPlayingView {
             
             Button {
                 vm.isPlaying.toggle()
+                if vm.isPlaying {
+                    vm.play()
+                } else {
+                    vm.pause()
+                }
             } label: {
                 Image(systemName: vm.isPlaying ? "pause.fill" : "play.fill")
                     .resizable()
