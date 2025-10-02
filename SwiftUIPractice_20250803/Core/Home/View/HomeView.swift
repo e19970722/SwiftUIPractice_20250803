@@ -58,6 +58,20 @@ extension HomeView {
             }
             .listRowBackground(Color.clear)
             .padding(.bottom, bottomPadding)
+            
+            
+            if let homeSections = vm.homeSections {
+                ForEach(homeSections) { section in
+                    Section {
+                        HomeSectionView(sectionTitle: section.name,
+                                        albums: section.albums,
+                                        layout: section.layout)
+                        
+                    }
+                    .listRowBackground(Color.clear)
+                    .padding(.bottom, bottomPadding)
+                }
+            }
 
         }
         .listStyle(.plain)

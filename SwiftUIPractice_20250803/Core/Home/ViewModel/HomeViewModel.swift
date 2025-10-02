@@ -17,5 +17,6 @@ class HomeViewModel: ObservableObject {
     @Published var songs: [MusicItem]?
     @Published var playlists: [PlaylistItem]?
     @Published var newMusic: NewMusicItem?
+    @Published var homeSections: [HomeSection]?
     
 }
