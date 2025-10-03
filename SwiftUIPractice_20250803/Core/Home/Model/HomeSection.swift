@@ -14,12 +14,12 @@ enum SectionLayout {
 
 struct HomeSection: Identifiable {
     var id: String = UUID().uuidString
-    let name: String
+    let title: String
     let albums: [MusicItem]
     let layout: SectionLayout
     
     init(name: String, albums: [MusicItem], layout: SectionLayout = .three) {
-        self.name = name
+        self.title = name
         self.albums = albums
         self.layout = layout
     }

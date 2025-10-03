@@ -9,35 +9,34 @@ import SwiftUI
 
 struct HomeSectionView: View {
     
-    var sectionTitle: String
-    var albums: [MusicItem]
-    var layout: SectionLayout
+    var section: HomeSection
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(sectionTitle)
-                .font(.system(size: 36, weight: .bold))
+            Text(section.title)
+                .font(.system(size: 32, weight: .bold))
                 .foregroundColor(.white)
             
             albumsView
-                .background(.white)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-    HomeSectionView(sectionTitle: DeveloperPreview.instance.homeSections.first?.name ?? "",
-                    albums: DeveloperPreview.instance.songs,
-                    layout: .three)
-        .background(.black)
-        .frame(width: UIScreen.main.bounds.size.width, height: 240)
+    if let firstSection = DeveloperPreview.instance.homeSections.first {
+        HomeSectionView(section: firstSection)
+            .background(.black)
+            .frame(width: UIScreen.main.bounds.size.width,
+                   height: UIScreen.main.bounds.size.height)
+    }
 }
 
 extension HomeSectionView {
     
     private var itemWidth: CGFloat {
         let screenWidth = UIScreen.main.bounds.width
-        let itemCount: CGFloat = layout == .three ? 3 : 4
+        let itemCount: CGFloat = section.layout == .three ? 3 : 4
         let spacing: CGFloat = 16
         let horizontalPadding: CGFloat = 32 // 16 * 2
         
@@ -47,13 +46,13 @@ extension HomeSectionView {
     private var albumsView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 16) {
-//                ForEach(albums) { album in
+//                ForEach(section.albums) { album in
 //                    AlbumImageTextView(imageName: album.albumImageName,
 //                                       description: album.albumName)
 //                        .frame(width: itemWidth)
 //                }
                 
-                if let firstAlbum = self.albums.first {
+                if let firstAlbum = self.section.albums.first {
                     AlbumImageTextView(imageName: firstAlbum.albumImageName,
                                        description: firstAlbum.albumName)
                         .frame(width: itemWidth)
@@ -74,7 +73,6 @@ extension HomeSectionView {
                         .frame(width: itemWidth)
                 }
             }
-            .padding(.horizontal, 16)
         }
     }
 }

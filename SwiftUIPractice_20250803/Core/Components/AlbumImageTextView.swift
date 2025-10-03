@@ -27,6 +27,7 @@ struct AlbumImageTextView: View {
                     .foregroundColor(.secondaryTextColor2)
                     .frame(width: imageWidth, alignment: .leading)
             }
+            .frame(width: geo.size.width)
         }
     }
 }
@@ -35,5 +36,4 @@ struct AlbumImageTextView: View {
     AlbumImageTextView(imageName: DeveloperPreview.instance.currentSong.albumImageName,
                        description: DeveloperPreview.instance.currentSong.albumName)
     .background(.black)
-    .frame(width: UIScreen.main.bounds.size.width * 0.3)
 }
