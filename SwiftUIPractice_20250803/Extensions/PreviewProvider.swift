@@ -77,8 +77,8 @@ class DeveloperPreview {
                                      artistImage: "Artist", videoImage: "NewMusicVideo")
     
     lazy var homeSections = [
-        HomeSection(name: "Your Pop Mix 1", albums: self.songs),
-        HomeSection(name: "Your Pop Mix 2", albums: self.songs),
-        HomeSection(name: "Your Pop Mix 3", albums: self.songs)
+        HomeSection(name: "Your top mixes", albums: self.songs),
+        HomeSection(name: "Recents", albums: self.songs, layout: .four),
+        HomeSection(name: "Made For \(self.user.userName)", albums: self.songs)
     ]
 }

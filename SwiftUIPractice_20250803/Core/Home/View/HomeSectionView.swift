@@ -12,14 +12,15 @@ struct HomeSectionView: View {
     var section: HomeSection
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text(section.title)
-                .font(.system(size: 32, weight: .bold))
-                .foregroundColor(.white)
-            
-            albumsView
+        GeometryReader { geo in
+            VStack(alignment: .leading, spacing: 16) {
+                Text(section.title)
+                    .font(.system(size: 28, weight: .bold))
+                    .foregroundColor(.white)
+                
+                albumsView(fullWidth: geo.size.width)
+            }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -28,23 +29,19 @@ struct HomeSectionView: View {
         HomeSectionView(section: firstSection)
             .background(.black)
             .frame(width: UIScreen.main.bounds.size.width,
-                   height: UIScreen.main.bounds.size.height)
+                   height: UIScreen.main.bounds.size.height * 0.3)
+            .padding(.horizontal, 16)
     }
 }
 
 extension HomeSectionView {
-    
-    private var itemWidth: CGFloat {
-        let screenWidth = UIScreen.main.bounds.width
+    private func albumsView(fullWidth: CGFloat) -> some View {
         let itemCount: CGFloat = section.layout == .three ? 3 : 4
         let spacing: CGFloat = 16
-        let horizontalPadding: CGFloat = 32 // 16 * 2
+        var itemWidth = (fullWidth - (spacing * (itemCount - 1))) / itemCount
+        itemWidth += (itemWidth / 5)
         
-        return (screenWidth - horizontalPadding - (spacing * (itemCount - 1))) / itemCount
-    }
-    
-    private var albumsView: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
+        return ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 16) {
 //                ForEach(section.albums) { album in
 //                    AlbumImageTextView(imageName: album.albumImageName,

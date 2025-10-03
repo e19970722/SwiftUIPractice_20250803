@@ -17,10 +17,12 @@ struct HomeSection: Identifiable {
     let title: String
     let albums: [MusicItem]
     let layout: SectionLayout
+    let heightPortion: CGFloat
     
-    init(name: String, albums: [MusicItem], layout: SectionLayout = .three) {
+    init(name: String, albums: [MusicItem], layout: SectionLayout = .three, heightPortion: CGFloat = 0.25) {
         self.title = name
         self.albums = albums
         self.layout = layout
+        self.heightPortion = heightPortion
     }
 }
