@@ -61,15 +61,15 @@ class DeveloperPreview {
         self.currentSong
     ]
     
-    let playLists = [
-        PlaylistItem(imageName: "Collections", title: "Collections"),
-        PlaylistItem(imageName: "Collections", title: "Collections"),
-        PlaylistItem(imageName: "Collections", title: "Collections"),
-        PlaylistItem(imageName: "Collections", title: "Collections"),
-        PlaylistItem(imageName: "Collections", title: "Collections"),
-        PlaylistItem(imageName: "Collections", title: "Collections"),
-        PlaylistItem(imageName: "Collections", title: "Collections"),
-        PlaylistItem(imageName: "Collections", title: "Collections")
+    lazy var playLists = [
+        PlaylistItem(imageName: "Collections", title: "Collections", artists: [self.artist, "Taylor Swift", "Demi Lovato"], durationSum: "2h 50m"),
+        PlaylistItem(imageName: "Collections", title: "Collections", durationSum: "2h 50m"),
+        PlaylistItem(imageName: "Collections", title: "Collections", durationSum: "2h 50m"),
+        PlaylistItem(imageName: "Collections", title: "Collections", durationSum: "2h 50m"),
+        PlaylistItem(imageName: "Collections", title: "Collections", durationSum: "2h 50m"),
+        PlaylistItem(imageName: "Collections", title: "Collections", durationSum: "2h 50m"),
+        PlaylistItem(imageName: "Collections", title: "Collections", durationSum: "2h 50m"),
+        PlaylistItem(imageName: "Collections", title: "Collections", durationSum: "2h 50m")
     ]
     
     lazy var newMusic = NewMusicItem(artist: self.artist,

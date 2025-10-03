@@ -18,8 +18,10 @@ struct PlaylistCollectionSectionView: View {
             let singleHeight = (geo.size.height - (3 * 8)) / 4
             
             var displayPlaylist = playlists[0...6]
-            displayPlaylist.insert(PlaylistItem(imageName: "heart",
-                                                title: "Liked Songs"), at: 0)
+            let likedPlaylist = PlaylistItem(imageName: "heart",
+                                             title: "Liked Songs",
+                                             durationSum: "2h 50m")
+            displayPlaylist.insert(likedPlaylist, at: 0)
             let twoColums: [GridItem] = [
                 // spacing 控制左右
                 GridItem(.flexible(), spacing: 8),
