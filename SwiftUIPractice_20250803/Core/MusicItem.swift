@@ -5,17 +5,30 @@
 //  Created by Yen Lin on 2025/9/15.
 //
 
-struct MusicItem {
+import Foundation
+
+struct MusicItem: Identifiable {
+    var id: String = UUID().uuidString
     let artist: String
-    let song: String
-    let album: String?
+    let artistImageName: String
+    let songName: String
+    let albumName: String
+    let albumImageName: String
     let songUrl: String?
     let duration: Double?
     
-    init(artist: String, song: String, album: String? = nil, songUrl: String? = nil, duration: Double? = nil) {
+    init(artist: String,
+         artistImageName: String,
+         songName: String,
+         albumName: String,
+         albumImageName: String,
+         songUrl: String?,
+         duration: Double?) {
         self.artist = artist
-        self.song = song
-        self.album = album
+        self.artistImageName = artistImageName
+        self.songName = songName
+        self.albumName = albumName
+        self.albumImageName = albumImageName
         self.songUrl = songUrl
         self.duration = duration
     }

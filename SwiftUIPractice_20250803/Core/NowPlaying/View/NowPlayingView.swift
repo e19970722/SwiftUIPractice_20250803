@@ -26,7 +26,7 @@ struct NowPlayingView: View {
         .background(Color.theme.nowPlayingView)
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .onAppear {
-            vm.loadSong(song: MusicItem(artist: "", song: ""))
+            vm.loadSong(song: DeveloperPreview.instance.currentSong)
         }
     }
 }
@@ -62,7 +62,7 @@ extension NowPlayingView {
     
     private var songInfoView: some View {
         HStack(spacing: 8) {
-            Image(vm.currentSong.album ?? "")
+            Image(vm.currentSong.albumImageName)
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -81,7 +81,7 @@ extension NowPlayingView {
     private var songTitle: some View {
         HStack(spacing: 4) {
             HStack {
-                Text(vm.currentSong.song)
+                Text(vm.currentSong.songName)
                     .lineLimit(1)
                 Text("·")
             }
